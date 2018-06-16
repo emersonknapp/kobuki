@@ -26,8 +26,8 @@
       -->
     <joint name="base_joint" type="fixed">
       <origin xyz="0 0 0.0102" rpy="0 0 0" />
-      <parent link="base_footprint"/>
-      <child link="base_link" />
+      <parent link="base_link"/>
+      <child link="base_footprint" />
     </joint>
     <link name="base_link">
       <visual>
@@ -221,7 +221,7 @@
     </link>
 
     <!-- Kobuki Gazebo simulation details -->
-    <kobuki_sim/>
+    <xacro:kobuki_sim/>
 
   </xacro:macro>
 </robot>
