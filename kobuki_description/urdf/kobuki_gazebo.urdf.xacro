@@ -51,6 +51,7 @@
 	    </sensor>
 	  </gazebo>
 
+    <!--
 	  <gazebo reference="cliff_sensor_left_link">
 	    <sensor type="ray" name="cliff_sensor_left">
 	      <always_on>true</always_on>
@@ -61,17 +62,17 @@
 	          <horizontal>
 	            <samples>50</samples>
 	            <resolution>1.0</resolution>
-	            <min_angle>-0.0436</min_angle>  <!-- -2.5 degree -->
-	            <max_angle>0.0436</max_angle> <!-- 2.5 degree -->
+	            <min_angle>-0.0436</min_angle>
+	            <max_angle>0.0436</max_angle>
 	          </horizontal>
-<!--            Can't use vertical rays until this bug is resolved: -->
+           Can't use vertical rays until this bug is resolved: -->
 <!--            https://bitbucket.org/osrf/gazebo/issue/509/vertical-sensor-doesnt-works -->
 <!-- 	          <vertical> -->
 <!-- 	            <samples>50</samples> -->
 <!-- 	            <resolution>1.0</resolution> -->
 <!-- 	            <min_angle>-0.0436</min_angle>  -2.5 degree -->
 <!-- 	            <max_angle>0.0436</max_angle> 2.5 degree -->
-<!-- 	          </vertical> -->
+<!-- 	          </vertical>
 	        </scan>
 	        <range>
 	          <min>0.01</min>
@@ -81,7 +82,9 @@
 	      </ray>
 	    </sensor>
 	  </gazebo>
+    -->
 
+    <!--
 	  <gazebo reference="cliff_sensor_right_link">
 	    <sensor type="ray" name="cliff_sensor_right">
 	      <always_on>true</always_on>
@@ -92,17 +95,17 @@
 	          <horizontal>
 	            <samples>50</samples>
 	            <resolution>1.0</resolution>
-	            <min_angle>-0.0436</min_angle>  <!-- -2.5 degree -->
-	            <max_angle>0.0436</max_angle> <!-- 2.5 degree -->
+	            <min_angle>-0.0436</min_angle>
+	            <max_angle>0.0436</max_angle>
 	          </horizontal>
-<!--            Can't use vertical rays until this bug is resolved: -->
+           Can't use vertical rays until this bug is resolved: -->
 <!--            https://bitbucket.org/osrf/gazebo/issue/509/vertical-sensor-doesnt-works -->
 <!-- 	          <vertical> -->
 <!-- 	            <samples>50</samples> -->
 <!-- 	            <resolution>1.0</resolution> -->
 <!-- 	            <min_angle>-0.0436</min_angle>  -2.5 degree -->
 <!-- 	            <max_angle>0.0436</max_angle> 2.5 degree -->
-<!-- 	          </vertical> -->
+<!-- 	          </vertical>
 	        </scan>
 	        <range>
 	          <min>0.01</min>
@@ -112,7 +115,9 @@
 	      </ray>
 	    </sensor>
 	  </gazebo>
+    -->
 
+    <!--
 	  <gazebo reference="cliff_sensor_front_link">
 	    <sensor type="ray" name="cliff_sensor_front">
 	      <always_on>true</always_on>
@@ -123,17 +128,17 @@
 	          <horizontal>
 	            <samples>50</samples>
 	            <resolution>1.0</resolution>
-	            <min_angle>-0.0436</min_angle>  <!-- -2.5 degree -->
-	            <max_angle>0.0436</max_angle> <!-- 2.5 degree -->
+	            <min_angle>-0.0436</min_angle>
+	            <max_angle>0.0436</max_angle> <
 	          </horizontal>
-<!-- 	          Can't use vertical rays until this bug is resolved: -->
+	          Can't use vertical rays until this bug is resolved: -->
 <!--            https://bitbucket.org/osrf/gazebo/issue/509/vertical-sensor-doesnt-works -->
 <!-- 	          <vertical> -->
 <!-- 	            <samples>50</samples> -->
 <!-- 	            <resolution>1.0</resolution> -->
 <!-- 	            <min_angle>-0.0436</min_angle>  -2.5 degree -->
 <!-- 	            <max_angle>0.0436</max_angle> 2.5 degree -->
-<!-- 	          </vertical> -->
+<!-- 	          </vertical>
 	        </scan>
 	        <range>
 	          <min>0.01</min>
@@ -143,9 +148,18 @@
 	      </ray>
 	    </sensor>
 	  </gazebo>
+  -->
 
 	  <gazebo reference="gyro_link">
 	   <sensor type="imu" name="imu">
+        <plugin name="gazebo_ros_imu_controller" filename="libgazebo_ros_imu_sensor.so">
+          <ros>
+            <argument>~/out:=imu</argument>
+          </ros>
+          <output_type>sensor_msgs/msg/Imu</output_type>
+          <body_name>gyro_link</body_name>
+          <frame_name>gyro_link</frame_name>
+        </plugin>
         <always_on>true</always_on>
         <update_rate>50</update_rate>
         <visualize>false</visualize>
