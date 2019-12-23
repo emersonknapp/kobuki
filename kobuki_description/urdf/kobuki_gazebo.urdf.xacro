@@ -152,14 +152,14 @@
 
 	  <gazebo reference="gyro_link">
 	   <sensor type="imu" name="imu">
-        <!-- <plugin name="gazebo_ros_imu_controller" filename="libgazebo_ros_imu_sensor.so">
+        <plugin name="gazebo_ros_imu_controller" filename="libgazebo_ros_imu_sensor.so">
           <ros>
             <argument>~/out:=imu</argument>
           </ros>
           <output_type>sensor_msgs/msg/Imu</output_type>
           <body_name>gyro_link</body_name>
           <frame_name>gyro_link</frame_name>
-        </plugin> -->
+        </plugin>
         <always_on>true</always_on>
         <update_rate>50</update_rate>
         <visualize>false</visualize>
@@ -168,11 +168,11 @@
             <type>gaussian</type>
 	          <rate>
 	            <mean>0.0</mean>
-	            <stddev>${0.0014*0.0014}</stddev> <!-- 0.25 x 0.25 (deg/s) -->
+	            <stddev>${0.0014*0.0014}</stddev>
 	            <bias_mean>0.0</bias_mean>
 	            <bias_stddev>0.0</bias_stddev>
 	          </rate>
-		        <accel> <!-- not used in the plugin and real robot, hence using tutorial values -->
+		        <accel>
 			        <mean>0.0</mean>
 			        <stddev>1.7e-2</stddev>
 			        <bias_mean>0.1</bias_mean>
