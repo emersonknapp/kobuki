@@ -160,6 +160,7 @@ KobukiRos::KobukiRos(const rclcpp::NodeOptions & options) : rclcpp::Node("kobuki
   raw_data_stream_publisher_ = this->create_publisher<std_msgs::msg::String>("debug/raw_data_stream", 100);
   raw_control_command_publisher_ = this->create_publisher<std_msgs::msg::Int16MultiArray>("debug/raw_control_command", 100);
   odom_publisher_ = this->create_publisher<nav_msgs::msg::Odometry>("odom", 50); // topic name and queue size
+  battery_publisher_ = this->create_publisher<sensor_msgs::msg::BatteryState>("battery", rclcpp::SensorDataQoS());
 
   odom_broadcaster_= std::make_unique<tf2_ros::TransformBroadcaster>(this);
 
@@ -551,6 +552,7 @@ void KobukiRos::processStreamData()
   publishDockIRData();
   publishInertia();
   publishRawInertia();
+  publishBatteryData();
 }
 
 /*****************************************************************************
@@ -688,6 +690,31 @@ void KobukiRos::publishDockIRData()
   msg->data.push_back(data.docking[2]);
 
   dock_ir_publisher_->publish(std::move(msg));
+}
+
+void KobukiRos::publishBatteryData()
+{
+  kobuki::Battery data = kobuki_.batteryStatus();
+  auto msg = std::make_unique<sensor_msgs::msg::BatteryState>();
+  msg->header.frame_id = "base_link";
+  msg->header.stamp = get_clock()->now();
+
+  msg->voltage = data.voltage;
+  switch (data.charging_state) {
+    case kobuki::Battery::Discharging:
+      msg->power_supply_status = sensor_msgs::msg::BatteryState::POWER_SUPPLY_STATUS_DISCHARGING;
+      break;
+    case kobuki::Battery::Charged:
+      msg->power_supply_status = sensor_msgs::msg::BatteryState::POWER_SUPPLY_STATUS_FULL;
+      break;
+    case kobuki::Battery::Charging:
+      msg->power_supply_status = sensor_msgs::msg::BatteryState::POWER_SUPPLY_STATUS_CHARGING;
+      break;
+  }
+  msg->percentage = data.percent();
+  msg->present = true;
+
+  battery_publisher_->publish(std::move(msg));
 }
 
 /*****************************************************************************
